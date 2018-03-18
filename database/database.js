@@ -29,14 +29,17 @@ function connect(app, config) {
 
         for(var i = 0; i < schemaLen; i++) {
             var curItem = config.dbSchemas[i];
-            // 모듈 파일의 createSchema 호출하여 스키마 GET
-            var curSchema = require(curItem.file).createSchema(mongoose);
 
+            // config.js의 createSchema 호출하여 스키마 GET
+            var curSchema = require(curItem.file).createSchema(mongoose);
+            // config.js의 정보로 model 생성
             var curModel = mongoose.model(curItem.collection, curSchema);
 
+            // database 객체에 각각 저장
             database[curItem.schemaName] = curSchema;
             database[curItem.modelName] = curModel;
         }
+        // 어디서든 쉽게 꺼내쓰도록..
         app.set('database', database);
     }
 }

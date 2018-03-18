@@ -1,5 +1,4 @@
 var express = require('express');
-var router = express.Router();
 var request = require('request');
 var cheerio = require('cheerio');
 var cheerio_tableparser = require('cheerio-tableparser');
@@ -9,8 +8,8 @@ var config = require('./config/config');
 
 module.exports = function (database, options, index) {
     options.url = config.url;
-    options.url = options.url+index;
-    //console.log(options.url);
+    options.url = options.url+index; // index를 하나씩 더하면서~
+
     request(options, function (error, response, body) {
         if(body) {
             var loadedHtml = cheerio.load(body);
